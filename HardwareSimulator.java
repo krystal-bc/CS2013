@@ -10,7 +10,7 @@ public class HardwareSimulator {
 	 * 
 	 * temperature: 20 to 100 degrees Fahrenheit
 	 * humidity: 0% to 100% 
-	 * moisture: 
+	 * moisture: 41% to 80%
 	 * pH: 4 to 8
 	 * 
 	 */
