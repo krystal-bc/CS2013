@@ -5,20 +5,23 @@ import java.util.Random;
 public class HardwareSimulator {
 
 	/*
-	 * This class simulates hardware readings by generating a random value for
+	 * This class simulates sensor readings by generating a random value for
 	 * normal ranges in real life.
 	 * 
 	 * temperature: 20 to 100 degrees Fahrenheit
 	 * humidity: 0% to 100% 
-	 * moisture: 41% to 80%
+	 * moisture: 0% to 100%
 	 * pH: 4 to 8
+	 * carbon dioxide: 0 to 2,000ppm
 	 * 
 	 */
+	//TODO: verify that values fall in a probabilistic range, especially for moisture and CO2
 
-	public int temperature;
-	public int humidity;
-	public int moisture;
-	public int pH;
+	private int temperature;
+	private int humidity;
+	private int moisture;
+	private int pH;
+	private int CO2;
 
 	private Random random = new Random();
 
@@ -62,7 +65,7 @@ public class HardwareSimulator {
 	}
 	
 	public int generateMoisture() {
-		//TODO: implement random moisture generator
+		moisture = random.nextInt(100);
 		return moisture;
 	}
 
@@ -86,6 +89,19 @@ public class HardwareSimulator {
 
 	public void setPH(int pH) {
 		this.pH = pH;
+	}
+	
+	public int getCO2() {
+		return CO2;
+	}
+	
+	public int generateCO2() {
+		CO2 = random.nextInt(2000);
+		return CO2;
+	}
+
+	public void setCO2(int cO2) {
+		CO2 = cO2;
 	}
 
 }
