@@ -3,7 +3,7 @@ package intelliGreen;
 public class Controller {
 
 	public static void main(String[] args) {
-		HardwareSimulator simulator = new HardwareSimulator();
+		SensorModule simulator = new SensorModule();
 		
 		System.out.println("The current temperature is "+ simulator.generateTemperature() + " degrees Fahrenheit");
 		System.out.println("The current humidity is "+simulator.generateHumidity() + "%");
