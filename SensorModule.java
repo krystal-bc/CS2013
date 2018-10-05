@@ -5,17 +5,16 @@ import java.util.Random;
 public class SensorModule {
 
 	/*
-	 * This class simulates sensor readings by generating a random value for
-	 * normal ranges in real life.
+	 * This class simulates sensor readings by generating a random value for normal
+	 * ranges in real life. Its purpose is to retrieve values from real sensors to
+	 * monitor the greenhouse environment
 	 * 
-	 * temperature: 20 to 100 degrees Fahrenheit
-	 * humidity: 0% to 100% 
-	 * moisture: 0% to 100%
-	 * pH: 4 to 8
-	 * carbon dioxide: 0 to 2,000ppm
+	 * temperature: 20 to 100 degrees Fahrenheit humidity: 0% to 100% moisture: 0%
+	 * to 100% pH: 4 to 8 carbon dioxide: 0 to 2,000ppm 
 	 * 
+	 * TODO: verify that values fall in a probabilistic range, especially for moisture 
+	 * and CO2
 	 */
-	//TODO: verify that values fall in a probabilistic range, especially for moisture and CO2
 
 	private int temperature;
 	private int humidity;
@@ -26,7 +25,7 @@ public class SensorModule {
 	private Random random = new Random();
 
 	public SensorModule() {
-		
+
 	}
 
 	public int getTemperature() {
@@ -34,9 +33,10 @@ public class SensorModule {
 	}
 
 	/*
-	 * temperatures are assumed to range between 20 and 100 degrees Fahrenheit. Random
-	 * generates a number between 0 and the given upper bound, and since we don't
-	 * want values to start at 0, we add 20. Then our upper bound is 100 - 20 = 80.
+	 * temperatures are assumed to range between 20 and 100 degrees Fahrenheit.
+	 * Random generates a number between 0 and the given upper bound, and since we
+	 * don't want values to start at 0, we add 20. Then our upper bound is 100 - 20
+	 * = 80.
 	 */
 	public int generateTemperature() {
 		temperature = random.nextInt(80) + 20;
@@ -63,7 +63,7 @@ public class SensorModule {
 	public int getMoisture() {
 		return moisture;
 	}
-	
+
 	public int generateMoisture() {
 		moisture = random.nextInt(100);
 		return moisture;
@@ -90,11 +90,11 @@ public class SensorModule {
 	public void setPH(int pH) {
 		this.pH = pH;
 	}
-	
+
 	public int getCO2() {
 		return CO2;
 	}
-	
+
 	public int generateCO2() {
 		CO2 = random.nextInt(2000);
 		return CO2;
