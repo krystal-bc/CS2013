@@ -21,7 +21,7 @@ public class HardwareModule {
 	private boolean CO2releaseOn;
 
 	private enum AirCond {
-		HEAT, COOL, OFF
+		HEATING, COOLING, OFF
 	};
 
 	private AirCond cond;
@@ -38,12 +38,12 @@ public class HardwareModule {
 		// TODO: implement methods for the rest of the array values
 	}
 
-	public void checkAir(int currentTemp, int desiredTemp) {
+	public AirCond checkAir(int currentTemp, int desiredTemp) {
 		if (currentTemp < desiredTemp) {
-			setCond(AirCond.HEAT);
+			setCond(AirCond.HEATING);
 			setAirOn(true);
 		} else if (currentTemp > desiredTemp) {
-			setCond(AirCond.COOL);
+			setCond(AirCond.COOLING);
 			setAirOn(true);
 		} else {
 			setCond(AirCond.OFF);
@@ -51,6 +51,7 @@ public class HardwareModule {
 		}
 		// TODO: should this method return an int value for the incremented/decremented
 		// temperature?
+		return getCond();
 	}
 
 	public boolean isHumidifierOn() {
