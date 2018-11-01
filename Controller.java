@@ -39,10 +39,10 @@ public class Controller extends Application {
 		// TODO: at startup ask for desired values, save them to 'desired' ArrayList
 
 		primaryStage.setTitle("IntelliGarden");
-		Scene mainScene = new Scene(display, 500, 500);
+		Scene mainScene = new Scene(display, 1000, 500);
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
-		
+
 		current.set(0, simulator.generateTemperature());
 		current.set(1, simulator.generateHumidity());
 		current.set(2, simulator.generateMoisture());
@@ -54,18 +54,32 @@ public class Controller extends Application {
 		display.setLbl_moisture(current.get(2));
 		display.setLbl_PH(current.get(3));
 		display.setLbl_CO2(current.get(4));
+		
+		display.setLbl_desiredTemp(desired.get(0));
+		display.setLbl_desiredHumid(desired.get(1));
+		display.setLbl_desiredMoisture(desired.get(2));
+		display.setLbl_desiredPH(desired.get(3));
+		display.setLbl_desiredCO2(desired.get(4));
 
 		hardware.checkAir(current.get(0), desired.get(0));
-		display.setLbl_AirCond("A/C: " + hardware.getCond());
-		
-		//TODO: find a way to track elapsed time
+		hardware.checkHumidity(current.get(1), desired.get(1));
+		hardware.checkMoisture(current.get(2), desired.get(2));
+		hardware.checkCO2(current.get(4), desired.get(4));
 
-//		if (time.getSecond() - lastSeconds > 10) {
-//			
-//			display.setLbl_time("Current Time: " + formatTime());
-//			
-//			lastSeconds = time.getSecond();
-//		}
+		display.setLbl_AirCond("A/C: " + hardware.getCond());
+		display.setLbl_Humidifier("Humidifier: " + ((hardware.isHumidifierOn() == true) ? "ON" : "OFF"));
+		display.setLbl_Irrigation("Irrigation: " + ((hardware.isIrrigationOn() == true) ? "ON" : "OFF"));
+		display.setLbl_CO2release("CO2 release: " + ((hardware.isCO2releaseOn() == true) ? "ON" : "OFF"));
+		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
+
+		// TODO: find a way to track elapsed time
+
+		// if (time.getSecond() - lastSeconds > 10) {
+		//
+		// display.setLbl_time("Current Time: " + formatTime());
+		//
+		// lastSeconds = time.getSecond();
+		// }
 
 		// TODO: add button for changing desired values and presets
 	}

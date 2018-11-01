@@ -33,12 +33,9 @@ public class HardwareModule {
 	public HardwareModule(ArrayList<Integer> current, ArrayList<Integer> desired) {
 		this.setCurrent(current);
 		this.setDesired(desired);
-
-		checkAir(current.get(0), desired.get(0));
-		// TODO: implement methods for the rest of the array values
 	}
 
-	public AirCond checkAir(int currentTemp, int desiredTemp) {
+	public void checkAir(int currentTemp, int desiredTemp) {
 		if (currentTemp < desiredTemp) {
 			setCond(AirCond.HEATING);
 			setAirOn(true);
@@ -51,7 +48,19 @@ public class HardwareModule {
 		}
 		// TODO: should this method return an int value for the incremented/decremented
 		// temperature?
-		return getCond();
+	}
+
+	public void checkHumidity(int currentHumid, int desiredHumid) {
+		if (currentHumid < desiredHumid) {
+			setHumidifierOn(true);
+		} else if (currentHumid > desiredHumid) {
+			setVentOn(true);
+			setHumidifierOn(false);
+		} else {
+			setVentOn(false);
+			setHumidifierOn(false);
+		}
+
 	}
 
 	public boolean isHumidifierOn() {
@@ -62,6 +71,7 @@ public class HardwareModule {
 		this.humidifierOn = humidifierOn;
 	}
 
+	//TODO: track hours
 	public boolean isLightsOn() {
 		return lightsOn;
 	}
@@ -78,12 +88,32 @@ public class HardwareModule {
 		this.ventOn = ventOn;
 	}
 
+	public void checkMoisture(int currentMoisture, int desiredMoisture) {
+		if (currentMoisture < desiredMoisture) {
+			setIrrigationOn(true);
+		} else {
+			setIrrigationOn(false);
+		}
+	}
+
 	public boolean isIrrigationOn() {
 		return irrigationOn;
 	}
 
 	public void setIrrigationOn(boolean irrigationOn) {
 		this.irrigationOn = irrigationOn;
+	}
+	
+	public void checkCO2(int currentCO2, int desiredCO2) {
+		if (currentCO2 < desiredCO2) {
+			setCO2releaseOn(true);
+		} else if (currentCO2 > desiredCO2) {
+			setVentOn(true);
+			setCO2releaseOn(false);
+		}else {
+			setCO2releaseOn(false);
+			setVentOn(false);
+		}
 	}
 
 	public boolean isCO2releaseOn() {
