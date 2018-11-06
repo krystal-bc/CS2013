@@ -35,7 +35,7 @@ public class Controller extends Application {
 		Application.launch(args);
 	}
 
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws InterruptedException {
 		// TODO: at startup ask for desired values, save them to 'desired' ArrayList
 
 		primaryStage.setTitle("IntelliGarden");
@@ -48,6 +48,8 @@ public class Controller extends Application {
 		current.set(2, simulator.generateMoisture());
 		current.set(3, simulator.generatePH());
 		current.set(4, simulator.generateCO2());
+		hardware.setCurrent(current);
+		hardware.setDesired(desired);
 
 		display.setLbl_temperature(current.get(0));
 		display.setLbl_humidity(current.get(1));
@@ -72,6 +74,20 @@ public class Controller extends Application {
 		display.setLbl_CO2release("CO2 release: " + ((hardware.isCO2releaseOn() == true) ? "ON" : "OFF"));
 		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
 
+		//repeat all this stuff
+//		current = hardware.getCurrent();
+//		display.setLbl_temperature(current.get(0));
+//		display.setLbl_humidity(current.get(1));
+//		display.setLbl_moisture(current.get(2));
+//		display.setLbl_PH(current.get(3));
+//		display.setLbl_CO2(current.get(4));
+		
+//		display.setLbl_AirCond("A/C: " + hardware.getCond());
+//		display.setLbl_Humidifier("Humidifier: " + ((hardware.isHumidifierOn() == true) ? "ON" : "OFF"));
+//		display.setLbl_Irrigation("Irrigation: " + ((hardware.isIrrigationOn() == true) ? "ON" : "OFF"));
+//		display.setLbl_CO2release("CO2 release: " + ((hardware.isCO2releaseOn() == true) ? "ON" : "OFF"));
+//		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
+		
 		// TODO: find a way to track elapsed time
 
 		// if (time.getSecond() - lastSeconds > 10) {
@@ -82,6 +98,10 @@ public class Controller extends Application {
 		// }
 
 		// TODO: add button for changing desired values and presets
+	}
+	
+	private static void update() {
+		
 	}
 
 	private static String formatTime() {
