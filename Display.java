@@ -1,9 +1,15 @@
 package intelliGreen;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class Display extends FlowPane {
 
@@ -34,9 +40,11 @@ public class Display extends FlowPane {
 	Label lbl_Ventilator = new Label();
 	Label lbl_CO2release = new Label();
 	VBox vbox_hardwareStatus = new VBox();
+	
+	Button button = new Button("Customize Values");
 
 	public Display() {
-		setPadding(new Insets(10, 20, 20, 20));
+		formatPane();
 		vbox_sensorValues.getChildren().addAll(lbl_currentHeading, lbl_temperature, lbl_humidity, lbl_moisture, lbl_PH, lbl_CO2);
 		getChildren().add(vbox_sensorValues);
 		setHgap(100);
@@ -46,6 +54,19 @@ public class Display extends FlowPane {
 		vbox_hardwareStatus.getChildren().addAll(lbl_hardwareHeading, lbl_AirCond, lbl_Humidifier, lbl_Irrigation, lbl_Ventilator,
 				lbl_CO2release);
 		getChildren().add(vbox_hardwareStatus);
+		getChildren().add(button);
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Stage inputStage = new Stage();
+				InputDisplay inputDisplay = new InputDisplay();
+				inputStage.setTitle("IntelliGarden");
+				Scene inputScene = new Scene(inputDisplay, 1000, 500);
+				inputStage.setScene(inputScene);
+				inputStage.show();
+			}
+		});
+		
 	}
 
 	// Sensor Labels
@@ -149,6 +170,37 @@ public class Display extends FlowPane {
 
 	public void setLbl_CO2release(String s) {
 		lbl_CO2release.setText(s);
+	}
+	
+	private void formatPane() {
+		setStyle("-fx-background-color: white;"); 
+		setPadding(new Insets(10, 20, 20, 20));
+		lbl_currentHeading.setFont(new Font("Arial", 20));
+		lbl_currentHeading.setPadding(new Insets(0, 0, 15, 0));
+		lbl_temperature.setPadding(new Insets(0, 0, 5, 0));
+		lbl_humidity.setPadding(new Insets(0, 0, 5, 0));
+		lbl_moisture.setPadding(new Insets(0, 0, 5, 0));
+		lbl_PH.setPadding(new Insets(0, 0, 5, 0));
+		lbl_CO2.setPadding(new Insets(0, 0, 5, 0));
+		
+		/*
+		 *Label lbl_desiredHeading = new Label("Desired Values");
+	Label lbl_desiredTemp = new Label();
+	Label lbl_desiredHumid = new Label();
+	Label lbl_desiredMoist = new Label();
+	Label lbl_desiredPH = new Label();
+	Label lbl_desiredCO2 = new Label();
+	VBox vbox_desiredValues = new VBox();
+	
+	//TODO: Implement status of lights
+	Label lbl_hardwareHeading = new Label("Hardware Statuses");
+	Label lbl_AirCond = new Label();
+	Label lbl_Humidifier = new Label();
+	Label lbl_Irrigation = new Label();
+	Label lbl_Ventilator = new Label();
+	Label lbl_CO2release = new Label();
+	VBox vbox_hardwareStatus = new VBox();
+		 */
 	}
 
 }
