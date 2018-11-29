@@ -13,6 +13,7 @@ public class HardwareModule {
 	private ArrayList<Integer> current = new ArrayList<>();
 	private ArrayList<Integer> desired = new ArrayList<>();
 
+
 	private boolean airOn;
 	private boolean humidifierOn;
 	private boolean lightsOn;
@@ -20,11 +21,26 @@ public class HardwareModule {
 	private boolean irrigationOn;
 	private boolean CO2releaseOn;
 
-	private enum AirCond {
+	public enum AirCond {
 		HEATING, COOLING, OFF
 	};
 
+	public enum Humid {
+		ON, OFF
+	};
+	
+	public enum Moist {
+		ON, OFF
+	};
+
+	public enum Co2 {
+		ON, OFF
+	};
+	
 	private AirCond cond;
+	private Humid humidCond;
+	private Moist moistCond;
+	private Co2 co2Cond;
 
 	public HardwareModule() {
 
@@ -39,19 +55,9 @@ public class HardwareModule {
 		if (currentTemp < desiredTemp) {
 			setCond(AirCond.HEATING);
 			setAirOn(true);
-			if (current.get(0) == null) {
-				current.add(0, currentTemp + 2);
-			} else {
-				current.set(0, currentTemp + 2);
-			}
 		} else if (currentTemp > desiredTemp) {
 			setCond(AirCond.COOLING);
 			setAirOn(true);
-			if (current.get(0) != null) {
-				current.set(0, currentTemp - 2);
-			} else {
-				current.add(0, currentTemp - 2);
-			}
 		} else {
 			setCond(AirCond.OFF);
 			setAirOn(false);
@@ -62,21 +68,14 @@ public class HardwareModule {
 
 	public void checkHumidity(int currentHumid, int desiredHumid) {
 		if (currentHumid < desiredHumid) {
+			setHumidCond(Humid.ON);
 			setHumidifierOn(true);
-			if (current.get(1) == null) {
-				current.add(1, currentHumid + 2);
-			} else {
-				current.set(1, currentHumid + 2);
-			}
 		} else if (currentHumid > desiredHumid) {
+			setHumidCond(Humid.OFF);
 			setVentOn(true);
 			setHumidifierOn(false);
-			if (current.get(1) == null) {
-				current.add(1, currentHumid - 2);
-			} else {
-				current.set(1, currentHumid - 2);
-			}
 		} else {
+			setHumidCond(Humid.OFF);
 			setVentOn(false);
 			setHumidifierOn(false);
 		}
@@ -91,7 +90,7 @@ public class HardwareModule {
 		this.humidifierOn = humidifierOn;
 	}
 
-	// TODO: track hours
+	//TODO: track hours
 	public boolean isLightsOn() {
 		return lightsOn;
 	}
@@ -110,14 +109,11 @@ public class HardwareModule {
 
 	public void checkMoisture(int currentMoisture, int desiredMoisture) {
 		if (currentMoisture < desiredMoisture) {
+			setMoistCond(Moist.ON);
 			setIrrigationOn(true);
-			if (current.get(2) == null) {
-				current.add(2, currentMoisture + 2);
-			} else {
-				current.set(2, currentMoisture + 2);
-			}
 		} else {
 			setIrrigationOn(false);
+			setMoistCond(Moist.OFF);
 		}
 	}
 
@@ -128,24 +124,17 @@ public class HardwareModule {
 	public void setIrrigationOn(boolean irrigationOn) {
 		this.irrigationOn = irrigationOn;
 	}
-
+	
 	public void checkCO2(int currentCO2, int desiredCO2) {
 		if (currentCO2 < desiredCO2) {
+			setCO2Cond(Co2.ON);
 			setCO2releaseOn(true);
-			if (current.get(4) == null) {
-				current.add(4, currentCO2 + 200);
-			} else {
-				current.set(4, currentCO2 + 200);
-			}
 		} else if (currentCO2 > desiredCO2) {
+			setCO2Cond(Co2.OFF);
 			setVentOn(true);
 			setCO2releaseOn(false);
-			if (current.get(4) == null) {
-				current.add(4, currentCO2 - 200);
-			} else {
-				current.set(4, currentCO2 - 200);
-			}
-		} else {
+		}else {
+			setCO2Cond(Co2.OFF);
 			setCO2releaseOn(false);
 			setVentOn(false);
 		}
@@ -189,6 +178,74 @@ public class HardwareModule {
 
 	public void setDesired(ArrayList<Integer> desired) {
 		this.desired = desired;
+	}
+	public String getCondToString() {
+		if (getCond() == AirCond.HEATING) {
+			return "HEATING";
+		}
+		else if (getCond() == AirCond.COOLING) {
+			return "COOLING";
+		}
+		else{
+			return "OFF";
+		}
+		
+	}
+	public Humid getHumidCond() {
+		return humidCond;
+	}
+	public void setHumidCond(Humid x) {
+		this.humidCond = x;
+	}
+	
+	public String getHumidCondtoString() {
+		if (getHumidCond() == Humid.ON) {
+			return "ON";
+		}
+		else if(getHumidCond() == Humid.OFF) {
+			return "OFF";
+		}
+		else{
+			return "OFF";
+		}
+		
+	}
+	public Moist getMoistCond() {
+		return moistCond;
+	}
+	public void setMoistCond(Moist x) {
+		this.moistCond = x;
+	}
+	
+	public String getMoistCondtoString() {
+		if (getMoistCond() == Moist.ON) {
+			return "ON";
+		}
+		else if(getMoistCond() == Moist.OFF) {
+			return "OFF";
+		}
+		else{
+			return "OFF";
+		}
+		
+	}
+	public Co2 getCO2Cond() {
+		return co2Cond;
+	}
+	public void setCO2Cond(Co2 x) {
+		this.co2Cond = x;
+	}
+	public String getCO2CondtoString() {
+		if (getCO2Cond() == Co2.ON) {
+			return "ON";
+		}
+		else if(getCO2Cond() == Co2.OFF) {
+			return "OFF";
+		}
+		else{
+			return "OFF";
+		}
+		
 	}
 
 }
