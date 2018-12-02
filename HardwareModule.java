@@ -91,6 +91,15 @@ public class HardwareModule {
 	}
 
 	//TODO: track hours
+	public void checkLightsOn(int hour) {
+		if (hour >= 8 && hour <= 18) {
+			setLightsOn(true);
+		}
+		else {
+		setLightsOn(false);
+		}
+	}
+	
 	public boolean isLightsOn() {
 		return lightsOn;
 	}
