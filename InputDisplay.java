@@ -73,8 +73,8 @@ public class InputDisplay extends FlowPane{
 		dry.setPadding(new Insets(5, 10, 2.5, 10));
 		cold.setPadding(new Insets(5, 10, 2.5, 10));
 		
-		tPreset.add(82);
-		tPreset.add(70);
+		tPreset.add(88);
+		tPreset.add(80);
 		tPreset.add(60);
 		tPreset.add(7);
 		tPreset.add(1500);
@@ -85,9 +85,9 @@ public class InputDisplay extends FlowPane{
 		cPreset.add(7);
 		cPreset.add(1400);
 		
-		dPreset.add(79);
-		dPreset.add(10);
-		dPreset.add(10);
+		dPreset.add(85);
+		dPreset.add(40);
+		dPreset.add(25);
 		dPreset.add(7);
 		dPreset.add(1400);
 		
@@ -99,15 +99,15 @@ public class InputDisplay extends FlowPane{
 				+ "Carbon Dioxide = 1400 \n");
 		
 		dry.setText("This is the following preset for a dry environment \n"
-				+ "Temperature = 79 \n"
-				+ "Humidity = 	10 \n"
-				+ "Moisture = 10 \n"
+				+ "Temperature = 85 \n"
+				+ "Humidity = 	40 \n"
+				+ "Moisture = 25 \n"
 				+ "pH = 7 \n"
 				+ "Carbon Dioxide = 1400 \n");
 		
 		tropical.setText("This is the following preset for a tropical environment \n"
-				+ "Temperature = 82 \n"
-				+ "Humidity = 70 \n"
+				+ "Temperature = 88 \n"
+				+ "Humidity = 80 \n"
 				+ "Moisture = 60 \n"
 				+ "pH = 7 \n"
 				+ "Carbon Dioxide = 1500 \n");
