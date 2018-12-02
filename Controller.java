@@ -40,10 +40,6 @@ public class Controller extends Application {
 	HardwareModule hardware = new HardwareModule();
 	Display display = new Display();
 
-
-	static ZonedDateTime time = ZonedDateTime.now();
-	static int lastSeconds = time.getSecond();
-
 	public static void main(String[] args) throws InterruptedException {
 		current.add(0, simulator.generateTemperature());
 		current.add(1, simulator.generateHumidity());
@@ -110,6 +106,8 @@ public class Controller extends Application {
 		display.setLbl_Irrigation("Irrigation: " + ((hardware.isIrrigationOn() == true) ? "ON" : "OFF"));
 //		display.setLbl_CO2release("CO2 release: " + ((hardware.isCO2releaseOn() == true) ? "ON" : "OFF"));
 		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
+		
+		display.setLbl_Lights("Lights: " + ((hardware.isLightsOn() == true) ? "ON" : "OFF"));
 
 
 		Timeline timeline = new Timeline(
@@ -177,6 +175,11 @@ public class Controller extends Application {
 								display.setLbl_dMoist("DESIRED MOISTURE: " + desired.get(2));
 								display.setLbl_dPh("DESIRED PH: " + desired.get(3));
 								display.setLbl_dCO2("DESIRED CO2: " + desired.get(4));
+								
+								ZonedDateTime time = ZonedDateTime.now();
+								hardware.checkLightsOn(time.getHour());
+								display.setLbl_RealTime("Time: " + formatTime(time.getHour(), time.getMinute()));
+								display.setLbl_Lights("Lights: " + ((hardware.isLightsOn() == true) ? "ON" : "OFF"));
 
 							}
 						}
@@ -191,12 +194,16 @@ public class Controller extends Application {
 		desired = InputDisplay.desired;
 	}
 
-	private static String formatTime() {
+	private static String formatTime(int hour, int minute) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(Integer.toString(time.getHour() % 12));
+		sb.append(Integer.toString(hour % 12));
 		sb.append(":");
-		sb.append(Integer.toString(time.getMinute()));
-		if (time.getHour() < 12) {
+		if (minute < 10) {
+			sb.append(Integer.toString(0));
+		}
+		sb.append(Integer.toString(minute));
+		
+		if (hour < 12) {
 			sb.append(" AM");
 		} else {
 			sb.append(" PM");
