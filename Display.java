@@ -65,6 +65,11 @@ public class Display extends FlowPane {
 	Label lbl_dHumid = new Label();
 	Label lbl_dMoist = new Label();
 	
+	Label lbl_lightsystemHeading = new Label("Lighting Status");
+	Label lbl_RealTime = new Label();
+	Label lbl_Lights = new Label();
+	VBox vbox_lightsystem = new VBox();
+	
 	VBox vbox_hardwareStatus = new VBox();
 	public Gauge tempG;
 	public Gauge humidG;
@@ -129,6 +134,8 @@ public class Display extends FlowPane {
 //		getChildren().add(vbox_desiredValues);
 		vbox_hardwareStatus.getChildren().addAll(lbl_hardwareHeading, lbl_AirCond, lbl_Humidifier, lbl_Irrigation, lbl_Ventilator,
 				lbl_CO2release, button);
+		vbox_lightsystem.getChildren().addAll(lbl_lightsystemHeading, lbl_Lights, lbl_RealTime);
+		getChildren().add(vbox_lightsystem);
 		button.setOnAction(new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent event) {
@@ -293,6 +300,15 @@ public class Display extends FlowPane {
 
 	public void setLbl_CO2release(String s) {
 		lbl_CO2release.setText(s);
+	}
+	
+	// Light System Labels
+	public void setLbl_RealTime(String s) {
+		lbl_RealTime.setText(s);
+	}
+
+	public void setLbl_Lights(String s) {
+		lbl_Lights.setText(s);
 	}
 
 
