@@ -2,18 +2,14 @@ package intelliGreen;
 
 import java.util.ArrayList;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -42,7 +38,6 @@ public class InputDisplay extends FlowPane{
 	VBox vbox_labels = new VBox();
 	VBox vbox_desired = new VBox();
 	VBox vbox_presets = new VBox();
-	HBox buttons = new HBox();
 	
 	GridPane grid = new GridPane();
 	
@@ -119,13 +114,11 @@ public class InputDisplay extends FlowPane{
 		
 		vbox_labels.getChildren().addAll(lbl_instructions, lbl_temp, lbl_humid, lbl_moist, lbl_pH, lbl_cO2);
 		vbox_desired.getChildren().addAll(lbl_empty,temperature, Humidity, Moisture, pH, cO2);
-		vbox_presets.getChildren().addAll(tropical, dry, cold);
-		buttons.getChildren().addAll(tropicalPreset, coldPreset, dryPreset);
+		vbox_presets.getChildren().addAll(tropical,tropicalPreset, dry, dryPreset, cold, coldPreset);
 		grid.add(vbox_labels, 0, 0);
 		grid.add(vbox_desired, 1, 0);
 		grid.add(rtnButton, 1, 1);
 		grid.add(vbox_presets, 2, 0);
-		grid.add(buttons, 2, 1);
 		
 		rtnButton.setOnAction(e -> { 
 			
