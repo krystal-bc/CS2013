@@ -34,6 +34,7 @@ public class Controller extends Application {
 	static IntegerProperty humid = new SimpleIntegerProperty(45);
 	static IntegerProperty moist = new SimpleIntegerProperty(50);
 	static IntegerProperty co2 = new SimpleIntegerProperty(1124);
+	static IntegerProperty SunTime = new SimpleIntegerProperty(12);
 
 
 	static SensorModule simulator = new SensorModule();
@@ -41,7 +42,7 @@ public class Controller extends Application {
 	Display display = new Display();
 
 
-	static ZonedDateTime time = ZonedDateTime.now();
+	ZonedDateTime time1 = ZonedDateTime.now();
 	static int lastSeconds = time.getSecond();
 
 	public static void main(String[] args) throws InterruptedException {
@@ -57,6 +58,7 @@ public class Controller extends Application {
 		desired.add(2, 65);
 		desired.add(3, 7);
 		desired.add(4, 1500);
+		desired.add(5, 12);
 		Controller.launch(args);
 
 
@@ -91,6 +93,9 @@ public class Controller extends Application {
 
 		display.setLbl_CO2(co2.get());
 		display.lbl_CO2.textProperty().bind(Bindings.concat("CO2: ", co2.asString(),"PPM"));
+		
+		display.setLbl_SunTime(SunTime.get());
+		display.lbl_SunTime.textProperty().bind(Bindings.concat("Amount of Light: ", SunTime.asString(), " hours"));
 
 
 		display.setLbl_desiredTemp(desired.get(0));
@@ -98,12 +103,14 @@ public class Controller extends Application {
 		display.setLbl_desiredMoisture(desired.get(2));
 		display.setLbl_desiredPH(desired.get(3));
 		display.setLbl_desiredCO2(desired.get(4));
+		display.setLbl_desiredSunTime(desired.get(5));
 
 
 		hardware.checkAir(temp.getValue().intValue(), desired.get(0));
 		hardware.checkHumidity(humid.get(), desired.get(1));
 		hardware.checkMoisture(moist.get(), desired.get(2));
 		hardware.checkCO2(co2.get(), desired.get(4));
+		hardware.checkLightsOn(time1.getHour(), desired.get(5));
 
 //		display.setLbl_AirCond("A/C: " + hardware.getCond());
 //		display.setLbl_Humidifier("Humidifier: " + ((hardware.isHumidifierOn() == true) ? "ON" : "OFF"));
@@ -111,6 +118,7 @@ public class Controller extends Application {
 //		display.setLbl_CO2release("CO2 release: " + ((hardware.isCO2releaseOn() == true) ? "ON" : "OFF"));
 		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
 
+		display.setLbl_Lights("Lights: " + ((hardware.isLightsOn() == true) ? "ON" : "OFF"));
 
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(0),
@@ -182,6 +190,13 @@ public class Controller extends Application {
 								display.setLbl_dMoist("DESIRED MOISTURE: " + desired.get(2));
 								display.setLbl_dPh("DESIRED PH: " + desired.get(3));
 								display.setLbl_dCO2("DESIRED CO2: " + desired.get(4));
+								
+								ZonedDateTime time = ZonedDateTime.now();
+								SunTime.set(desired.get(5));
+								hardware.checkLightsOn(time.getHour(), desired.get(5));
+								display.setLbl_RealTime("Time: " + formatTime(time.getHour(), time.getMinute()));
+								display.lbl_DesiredSunTime.textProperty().bind(Bindings.concat("Amount of Light: ", desired.get(5), " hours"));
+								display.setLbl_Lights("Lights: " + ((hardware.isLightsOn() == true) ? "ON" : "OFF"));
 
 							}
 						}
@@ -196,12 +211,16 @@ public class Controller extends Application {
 		desired = InputDisplay.desired;
 	}
 
-	private static String formatTime() {
+	private static String formatTime(int hour, int minute) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(Integer.toString(time.getHour() % 12));
+		sb.append(Integer.toString(hour % 12));
 		sb.append(":");
-		sb.append(Integer.toString(time.getMinute()));
-		if (time.getHour() < 12) {
+		if (minute < 10) {
+			sb.append(Integer.toString(0));
+		}
+		sb.append(Integer.toString(minute));
+		
+		if (hour < 12) {
 			sb.append(" AM");
 		} else {
 			sb.append(" PM");
