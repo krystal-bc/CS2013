@@ -20,6 +20,7 @@ public class InputDisplay extends GridPane {
 	TextField Moisture = new TextField();
 	TextField pH = new TextField();
 	TextField cO2 = new TextField();
+	TextField SunTime = new TextField();
 
 	Label tropical = new Label();
 	Label dry = new Label();
@@ -34,8 +35,8 @@ public class InputDisplay extends GridPane {
 	Label lbl_moist = new Label("Soil Moisture (%): ");
 	Label lbl_pH = new Label("Soil PH: ");
 	Label lbl_cO2 = new Label("CO2 (ppm): ");
-	Label lbl_empty = new Label("");
 	Label lbl_SunTime = new Label("Light (hours): ");
+	Label lbl_empty = new Label("");
 
 	VBox vbox_labels = new VBox();
 	VBox vbox_desired = new VBox();
@@ -52,6 +53,7 @@ public class InputDisplay extends GridPane {
 		lbl_moist.setPadding(new Insets(5, 10, 10, 10));
 		lbl_pH.setPadding(new Insets(5, 10, 10, 10));
 		lbl_cO2.setPadding(new Insets(5, 10, 10, 10));
+		lbl_SunTime.setPadding(new Insets(5, 10, 2.5, 10));
 		lbl_empty.setPadding(new Insets(5, 10, 10, 10));
 
 		Button btn_tropicalPreset = new Button("Tropical Preset");
@@ -64,35 +66,38 @@ public class InputDisplay extends GridPane {
 
 		Button rtnButton = new Button("Enter");
 
-		tPreset.add(82);
-		tPreset.add(70);
+		tPreset.add(88);
+		tPreset.add(80);
 		tPreset.add(60);
 		tPreset.add(7);
 		tPreset.add(1500);
-
+		tPreset.add(14);
+		
 		cPreset.add(55);
 		cPreset.add(10);
 		cPreset.add(25);
 		cPreset.add(7);
 		cPreset.add(1400);
-
-		dPreset.add(79);
-		dPreset.add(10);
-		dPreset.add(10);
+		cPreset.add(12);
+		
+		dPreset.add(85);
+		dPreset.add(40);
+		dPreset.add(25);
 		dPreset.add(7);
 		dPreset.add(1400);
+		dPreset.add(16);
 
 		cold.setText("Temperature = 55 \n" + "Humidity = 10 \n" + "Moisture = 25 \n" + "pH = 7 \n"
-				+ "Carbon Dioxide = 1400 \n");
+				+ "Carbon Dioxide = 1400 \n" + "Amount of Light = 12\n");
 
-		dry.setText("Temperature = 79 \n" + "Humidity = 	10 \n" + "Moisture = 10 \n" + "pH = 7 \n"
-				+ "Carbon Dioxide = 1400 \n");
+		dry.setText("Temperature = 85 \n" + "Humidity = 40 \n" + "Moisture = 25 \n" + "pH = 7 \n"
+				+ "Carbon Dioxide = 1400 \n" + "Amount of Light = 16\n");
 
-		tropical.setText("Temperature = 82 \n" + "Humidity = 70 \n" + "Moisture = 60 \n" + "pH = 7 \n"
-				+ "Carbon Dioxide = 1500 \n");
+		tropical.setText("Temperature = 88 \n" + "Humidity = 80 \n" + "Moisture = 60 \n" + "pH = 7 \n"
+				+ "Carbon Dioxide = 1500 \n" + "Amount of Light = 14\n");
 
-		vbox_labels.getChildren().addAll(lbl_instructions, lbl_temp, lbl_humid, lbl_moist, lbl_pH, lbl_cO2);
-		vbox_desired.getChildren().addAll(lbl_empty, temperature, Humidity, Moisture, pH, cO2, rtnButton);
+		vbox_labels.getChildren().addAll(lbl_instructions, lbl_temp, lbl_humid, lbl_moist, lbl_pH, lbl_cO2, lbl_SunTime);
+		vbox_desired.getChildren().addAll(lbl_empty, temperature, Humidity, Moisture, pH, cO2, SunTime, rtnButton);
 		vbox_tropicalPresets.getChildren().addAll(lbl_tropicalHeading, tropical, btn_tropicalPreset);
 		vbox_dryPresets.getChildren().addAll(lbl_dryHeading, dry, btn_dryPreset);
 		vbox_coldPresets.getChildren().addAll(lbl_coldHeading, cold, btn_coldPreset);
@@ -124,6 +129,9 @@ public class InputDisplay extends GridPane {
 
 			if (cO2.getText().length() > 0 && cO2.getText() != null)
 				desired.add(Integer.parseInt(cO2.getText()));
+			
+			if(SunTime.getText().length() > 0 && SunTime.getText() != null)
+				desired.add(Integer.parseInt(SunTime.getText()));
 
 			final Node source = (Node) e.getSource();
 			final Stage stage = (Stage) source.getScene().getWindow();
