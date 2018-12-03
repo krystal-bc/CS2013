@@ -91,8 +91,8 @@ public class HardwareModule {
 	}
 
 	//TODO: track hours
-	public void checkLightsOn(int hour) {
-		if (hour >= 8 && hour <= 18) {
+	public void checkLightsOn(int hour, int desiredSunTime) {
+		if (hour >= 6 && hour < (6 + desiredSunTime) ) {
 			setLightsOn(true);
 		}
 		else {
