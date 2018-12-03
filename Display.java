@@ -67,6 +67,8 @@ public class Display extends FlowPane {
 	
 	Label lbl_lightsystemHeading = new Label("Lighting Status");
 	Label lbl_RealTime = new Label();
+	Label lbl_SunTime = new Label();
+	Label lbl_DesiredSunTime = new Label();
 	Label lbl_Lights = new Label();
 	VBox vbox_lightsystem = new VBox();
 	
@@ -134,7 +136,7 @@ public class Display extends FlowPane {
 //		getChildren().add(vbox_desiredValues);
 		vbox_hardwareStatus.getChildren().addAll(lbl_hardwareHeading, lbl_AirCond, lbl_Humidifier, lbl_Irrigation, lbl_Ventilator,
 				lbl_CO2release, button);
-		vbox_lightsystem.getChildren().addAll(lbl_lightsystemHeading, lbl_Lights, lbl_RealTime);
+		vbox_lightsystem.getChildren().addAll(lbl_lightsystemHeading, lbl_Lights, lbl_SunTime, lbl_RealTime);
 		getChildren().add(vbox_lightsystem);
 		button.setOnAction(new EventHandler<ActionEvent>() {
 		@Override
@@ -305,6 +307,23 @@ public class Display extends FlowPane {
 	// Light System Labels
 	public void setLbl_RealTime(String s) {
 		lbl_RealTime.setText(s);
+	}
+	
+	public Label getLbl_SunTime() {
+		return lbl_SunTime;
+	}
+
+	public void setLbl_SunTime(int SunTime) {
+		lbl_SunTime.setText("Amount of Light: " + SunTime + "hours");
+	}
+
+	
+	public Label getLbl_desiredSunTime() {
+		return lbl_DesiredSunTime;
+	}
+	
+	public static void setLbl_desiredSunTime(int desiredSunTime) {
+		lbl_desiredCO2.setText(desiredSunTime + "hours");
 	}
 
 	public void setLbl_Lights(String s) {
