@@ -62,8 +62,6 @@ public class HardwareModule {
 			setCond(AirCond.OFF);
 			setAirOn(false);
 		}
-		// TODO: should this method return an int value for the incremented/decremented
-		// temperature?
 	}
 
 	public void checkHumidity(int currentHumid, int desiredHumid) {
@@ -90,7 +88,6 @@ public class HardwareModule {
 		this.humidifierOn = humidifierOn;
 	}
 
-	//TODO: track hours
 	public void checkLightsOn(int hour, int desiredSunTime) {
 		if (hour >= 6 && hour < (6 + desiredSunTime) ) {
 			setLightsOn(true);

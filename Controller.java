@@ -2,20 +2,9 @@ package intelliGreen;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-
-import eu.hansolo.colors.MaterialDesign;
-import eu.hansolo.medusa.Gauge;
-import eu.hansolo.medusa.GaugeBuilder;
-import intelliGreen.HardwareModule.AirCond;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.*;
 import javafx.event.*;
 import javafx.application.Application;
@@ -42,7 +31,7 @@ public class Controller extends Application {
 	Display display = new Display();
 
 
-	ZonedDateTime time1 = ZonedDateTime.now();
+	static ZonedDateTime time = ZonedDateTime.now();
 	static int lastSeconds = time.getSecond();
 
 	public static void main(String[] args) throws InterruptedException {
@@ -52,7 +41,6 @@ public class Controller extends Application {
 		current.add(3, simulator.generatePH());
 		current.add(4, simulator.generateCO2());
 
-		// TODO: Collect these at the beginning with display
 		desired.add(0, 70);
 		desired.add(1, 50);
 		desired.add(2, 65);
@@ -60,24 +48,16 @@ public class Controller extends Application {
 		desired.add(4, 1500);
 		desired.add(5, 12);
 		Controller.launch(args);
-
-
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws InterruptedException {
-		// TODO: at startup ask for desired values, save them to 'desired' ArrayList
 		primaryStage.setTitle("IntelliGarden");
 		Scene mainScene = new Scene(display);
+		mainScene.getStylesheets().add("./stylesheet.css");
 		primaryStage.setScene(mainScene);
 		primaryStage.setMaximized(true);
 		primaryStage.show();
-
-//		temp.setValue( simulator.generateTemperature());
-//		humid.setValue( simulator.generateHumidity());
-//		moist.setValue( simulator.generateMoisture());
-//		current.set(3, simulator.generatePH());
-//		co2.set(simulator.generateCO2());
 
 		display.tempG.valueProperty().bind(temp);
 		display.humidG.valueProperty().bind(humid);
@@ -90,35 +70,29 @@ public class Controller extends Application {
 		display.setLbl_moisture(moist.get());
 		display.lbl_moisture.textProperty().bind(Bindings.concat("Moisture: ", moist.asString(),"%"));
 		display.setLbl_PH(current.get(3));
-
 		display.setLbl_CO2(co2.get());
 		display.lbl_CO2.textProperty().bind(Bindings.concat("CO2: ", co2.asString(),"PPM"));
-		
 		display.setLbl_SunTime(SunTime.get());
 		display.lbl_SunTime.textProperty().bind(Bindings.concat("Amount of Light: ", SunTime.asString(), " hours"));
+		display.setLbl_Irrigation("Irrigation: " + ((hardware.isIrrigationOn() == true) ? "ON" : "OFF"));
+		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
+		display.setLbl_Lights("Lights: " + ((hardware.isLightsOn() == true) ? "ON" : "OFF"));
 
-
-		display.setLbl_desiredTemp(desired.get(0));
-		display.setLbl_desiredHumid(desired.get(1));
-		display.setLbl_desiredMoisture(desired.get(2));
-		display.setLbl_desiredPH(desired.get(3));
-		display.setLbl_desiredCO2(desired.get(4));
-		display.setLbl_desiredSunTime(desired.get(5));
+		Display.setLbl_desiredTemp(desired.get(0));
+		Display.setLbl_desiredHumid(desired.get(1));
+		Display.setLbl_desiredMoisture(desired.get(2));
+		Display.setLbl_desiredPH(desired.get(3));
+		Display.setLbl_desiredCO2(desired.get(4));
+		Display.setLbl_desiredSunTime(desired.get(5));
 
 
 		hardware.checkAir(temp.getValue().intValue(), desired.get(0));
 		hardware.checkHumidity(humid.get(), desired.get(1));
 		hardware.checkMoisture(moist.get(), desired.get(2));
 		hardware.checkCO2(co2.get(), desired.get(4));
-		hardware.checkLightsOn(time1.getHour(), desired.get(5));
+		hardware.checkLightsOn(time.getHour(), desired.get(5));
 
-//		display.setLbl_AirCond("A/C: " + hardware.getCond());
-//		display.setLbl_Humidifier("Humidifier: " + ((hardware.isHumidifierOn() == true) ? "ON" : "OFF"));
-		display.setLbl_Irrigation("Irrigation: " + ((hardware.isIrrigationOn() == true) ? "ON" : "OFF"));
-//		display.setLbl_CO2release("CO2 release: " + ((hardware.isCO2releaseOn() == true) ? "ON" : "OFF"));
-		display.setLbl_Ventilator("Ventilator: " + ((hardware.isVentOn() == true) ? "ON" : "OFF"));
-
-		display.setLbl_Lights("Lights: " + ((hardware.isLightsOn() == true) ? "ON" : "OFF"));
+		
 
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(0),

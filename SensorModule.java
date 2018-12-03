@@ -11,9 +11,7 @@ public class SensorModule {
 	 * 
 	 * temperature: 20 to 100 degrees Fahrenheit humidity: 0% to 100% moisture: 0%
 	 * to 100% pH: 4 to 8 carbon dioxide: 0 to 2,000ppm 
-	 * 
-	 * TODO: verify that values fall in a probabilistic range, especially for moisture 
-	 * and CO2
+	 *  
 	 */
 
 	private int temperature;
