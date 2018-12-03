@@ -22,6 +22,7 @@ public class InputDisplay extends FlowPane{
 	TextField Moisture = new TextField();
 	TextField pH = new TextField();
 	TextField cO2 = new TextField();
+	TextField SunTime = new TextField();
 	
 	Label tropical = new Label();
 	Label dry = new Label();
@@ -33,6 +34,7 @@ public class InputDisplay extends FlowPane{
 	Label lbl_moist = new Label("Soil Moisture (%): ");
 	Label lbl_pH = new Label("Soil PH: ");
 	Label lbl_cO2 = new Label("CO2 (ppm): ");
+	Label lbl_SunTime = new Label("Light (hours): ");
 	Label lbl_empty = new Label("");
 	
 	VBox vbox_labels = new VBox();
@@ -50,6 +52,7 @@ public class InputDisplay extends FlowPane{
 		lbl_moist.setPadding(new Insets(5, 10, 2.5, 10));
 		lbl_pH.setPadding(new Insets(5, 10, 2.5, 10));
 		lbl_cO2.setPadding(new Insets(5, 10, 2.5, 10));
+		lbl_SunTime.setPadding(new Insets(5, 10, 2.5, 10));
 		lbl_empty.setPadding(new Insets(5, 10, 2.5, 10));
 	
 		Button tropicalPreset = new Button("Tropical Preset");
@@ -68,6 +71,7 @@ public class InputDisplay extends FlowPane{
 		Moisture.setPadding(new Insets(5, 10, 2.5, 10));
 		pH.setPadding(new Insets(5, 10, 2.5, 10));
 		cO2.setPadding(new Insets(5, 10, 2.5, 10));
+		SunTime.setPadding(new Insets(5, 10, 2.5, 10));
 		
 		tropical.setPadding(new Insets(5, 10, 2.5, 10));
 		dry.setPadding(new Insets(5, 10, 2.5, 10));
@@ -78,42 +82,46 @@ public class InputDisplay extends FlowPane{
 		tPreset.add(60);
 		tPreset.add(7);
 		tPreset.add(1500);
+		tPreset.add(14);
 		
 		cPreset.add(55);
 		cPreset.add(10);
 		cPreset.add(25);
 		cPreset.add(7);
 		cPreset.add(1400);
+		tPreset.add(12);
 		
 		dPreset.add(85);
 		dPreset.add(40);
 		dPreset.add(25);
 		dPreset.add(7);
 		dPreset.add(1400);
+		tPreset.add(16);
 		
 		cold.setText("This is the following preset for a cold environment \n"
 				+ "Temperature = 55 \n"
 				+ "Humidity = 10 \n"
 				+ "Moisture = 25 \n"
 				+ "pH = 7 \n"
-				+ "Carbon Dioxide = 1400 \n");
+				+ "Carbon Dioxide = 1400 \n"
+				+ "Amount of Light = 12\n");
 		
 		dry.setText("This is the following preset for a dry environment \n"
 				+ "Temperature = 85 \n"
 				+ "Humidity = 	40 \n"
 				+ "Moisture = 25 \n"
-				+ "pH = 7 \n"
-				+ "Carbon Dioxide = 1400 \n");
+				+ "Carbon Dioxide = 1400 \n"
+				+ "Amount of Light = 16\n");
 		
 		tropical.setText("This is the following preset for a tropical environment \n"
 				+ "Temperature = 88 \n"
 				+ "Humidity = 80 \n"
 				+ "Moisture = 60 \n"
-				+ "pH = 7 \n"
-				+ "Carbon Dioxide = 1500 \n");
+				+ "Carbon Dioxide = 1500 \n"
+				+ "Amount of Light = 14\n");
 		
-		vbox_labels.getChildren().addAll(lbl_instructions, lbl_temp, lbl_humid, lbl_moist, lbl_pH, lbl_cO2);
-		vbox_desired.getChildren().addAll(lbl_empty,temperature, Humidity, Moisture, pH, cO2);
+		vbox_labels.getChildren().addAll(lbl_instructions, lbl_temp, lbl_humid, lbl_moist, lbl_pH, lbl_cO2, lbl_SunTime);
+		vbox_desired.getChildren().addAll(lbl_empty,temperature, Humidity, Moisture, pH, cO2, SunTime);
 		vbox_presets.getChildren().addAll(tropical,tropicalPreset, dry, dryPreset, cold, coldPreset);
 		grid.add(vbox_labels, 0, 0);
 		grid.add(vbox_desired, 1, 0);
@@ -137,6 +145,9 @@ public class InputDisplay extends FlowPane{
 			if(cO2.getText().length() > 0 && cO2.getText() != null)
 				desired.add(Integer.parseInt(cO2.getText()));
 			
+			if(SunTime.getText().length() > 0 && SunTime.getText() != null)
+				desired.add(Integer.parseInt(SunTime.getText()));
+			
 			
 			
 			final Node source = (Node) e.getSource();
@@ -148,6 +159,7 @@ public class InputDisplay extends FlowPane{
 			Display.setLbl_desiredMoisture(desired.get(2));
 			Display.setLbl_desiredPH(desired.get(3));
 			Display.setLbl_desiredCO2(desired.get(4));
+			Display.setLbl_desiredSunTime(desired.get(5));
 			
 			Controller.desired = desired;
 			
